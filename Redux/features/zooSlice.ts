@@ -3,17 +3,17 @@ import { zooAnimal } from '../../models/zooAnimal'
 
 interface ZooAttibutes {
   //TODO put your properties here e.g firstName: string;
-  zooAminals: Array<zooAnimal>;
+  zooAnimals: Array<zooAnimal>;
   escapedAnimal: zooAnimal;
-  animalEscaped: boolean;
+  animalHasEscaped: boolean;
 };
 
 type ZooState = {} & ZooAttibutes
 let initialState: ZooState = {
   //TODO add inital property values here e.g firstName : 
-  zooAminals: [new zooAnimal({ animalName: 'sid', animalType: 'snake', dangerLevel: 1 }), new zooAnimal({ animalName: 'tony', animalType: 'tiger', dangerLevel: 5 })],
+  zooAnimals: [{ animalName: 'sid', animalType: 'snake', dangerLevel: 1 } as zooAnimal, { animalName: 'tony', animalType: 'tiger', dangerLevel: 5 } as zooAnimal],
   escapedAnimal: {} as zooAnimal,
-  animalEscaped: false
+  animalHasEscaped: false
 }
 const ZooSlice = createSlice({
   name: 'Zoo',
@@ -21,15 +21,21 @@ const ZooSlice = createSlice({
   reducers: {
     //TODO put reducer actions here e.g setFirstName(state, action: PayloadAction<string>){}
     //always update the whole property, never amend the stored value
-    raiseAlarm(state, action: PayloadAction<boolean>) {
-      state.animalEscaped = action.payload;
+    setAlarm(state, action: PayloadAction<boolean>) {
+      state.animalHasEscaped = action.payload;
+    },
+    setEscapedAnimal(state, action:PayloadAction<zooAnimal>)
+    {
+      state.escapedAnimal = action.payload
+      state.animalHasEscaped = true;
     }
   }
 })
 
 export const {
   //TODO put reducer function name here e.g. setFirstName
-  raiseAlarm
+  setAlarm,
+  setEscapedAnimal
 } = ZooSlice.actions
 
 export default ZooSlice.reducer
